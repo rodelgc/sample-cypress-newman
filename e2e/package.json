@@ -1,0 +1,19 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "npm run cy:open"
+  },
+  "author": "Rodel Calasagsag",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^6.1.0"
+  },
+  "dependencies": {
+    "chance": "^1.1.7"
+  }
+}
