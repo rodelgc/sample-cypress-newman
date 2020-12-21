@@ -25,5 +25,4 @@ export function login({ username, password }) {
 export function assertThatUserIsAtSignInPage() {
   cy.url().should("contain", "/signin");
   cy.get("h1").should("have.text", "Sign in");
-  
 }

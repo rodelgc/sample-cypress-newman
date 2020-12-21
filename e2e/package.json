@@ -6,12 +6,20 @@
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test": "npm run cy:open"
+    "test": "npm run cy:open",
+    "lint:init": "eslint --init",
+    "lint": "eslint cypress/**/*.js"
   },
   "author": "Rodel Calasagsag",
   "license": "ISC",
   "devDependencies": {
     "chance": "^1.1.7",
-    "cypress": "^6.1.0"
+    "cypress": "^6.1.0",
+    "eslint": "^7.16.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1"
   }
 }
