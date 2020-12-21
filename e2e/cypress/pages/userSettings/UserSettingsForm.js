@@ -21,5 +21,6 @@ export function fillUserSettingsFormAndSave({ email, phoneNumber }) {
     .type(phoneNumber)
     .should("have.value", phoneNumber);
 
+  cy.intercept("PATCH", "**/users/*").as("saveUserSettings");
   cy.get('[data-test="user-settings-submit"]').click();
 }

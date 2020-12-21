@@ -36,6 +36,8 @@ import {
 } from "../pages/userSettings/UserSettingsForm";
 import { sideNavFullName } from "../pages/sideNav/FullName";
 import { sideNavUsername } from "../pages/sideNav/UserName";
+import { sideNavAccountBalance } from "../pages/sideNav/AccountBalance";
+import { logout } from "../pages/sideNav/Logout";
 
 describe("User Account", () => {
   it("sign up, sign in, onboarding, and complete user settings", () => {
@@ -51,12 +53,13 @@ describe("User Account", () => {
     // sign in
     login(user);
 
-    // assert side nav full name and username
+    // assert side nav values
     sideNavFullName().should(
       "have.text",
       `${user.firstName} ${user.lastName.charAt(0)}`
     );
     sideNavUsername().should("have.text", `@${user.username}`);
+    sideNavAccountBalance().should("have.text", "$0.00");
 
     // onboarding
     // "Get Started" step
@@ -83,10 +86,17 @@ describe("User Account", () => {
     userSettingsPageFirstNameInput().should("have.value", user.firstName);
     userSettingsPageLastNameInput().should("have.value", user.lastName);
     fillUserSettingsFormAndSave(user);
+    cy.wait("@saveUserSettings").its("response.statusCode").should("eq", 204);
+
     cy.reload();
+
     userSettingsPageFirstNameInput().should("have.value", user.firstName);
     userSettingsPageLastNameInput().should("have.value", user.lastName);
     userSettingsPageEmailInput().should("have.value", user.email);
     userSettingsPagePhoneNumberInput().should("have.value", user.phoneNumber);
+
+    // logout
+    logout();
+    assertThatUserIsAtSignInPage();
   });
 });
