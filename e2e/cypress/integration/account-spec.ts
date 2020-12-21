@@ -81,6 +81,7 @@ describe('User Account', () => {
     navigateToMyAccount();
     userSettingsPageFirstNameInput().should('have.value', user.firstName);
     userSettingsPageLastNameInput().should('have.value', user.lastName);
+    fillUserSettingsFormAndSave(user);
     cy.intercept('/checkAuth', (req) => {
       req.reply((res) => {
         const actualEmail = res.body.user.email;
@@ -90,7 +91,6 @@ describe('User Account', () => {
         expect(actualPhoneNumber).to.eq(user.phoneNumber);
       });
     });
-    fillUserSettingsFormAndSave(user);
 
     // logout
     logout();
