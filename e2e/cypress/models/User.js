@@ -1,4 +1,4 @@
-import { Chance } from "chance";
+import { Chance } from 'chance';
 
 const chance = new Chance();
 
@@ -8,12 +8,12 @@ class User {
   username = generateUsername(this.firstName, this.lastName);
   email = chance.email();
   phoneNumber = generatePhoneNumber();
-  password = "T3st!";
+  password = 'T3st!';
 }
 
 function generateUsername(firstName, lastName) {
-  const formattedFirst = firstName.replace(/\W/gi, "");
-  const formattedLast = lastName.replace(/\W/gi, "");
+  const formattedFirst = firstName.replace(/\W/gi, '');
+  const formattedLast = lastName.replace(/\W/gi, '');
 
   return `${formattedFirst}_${formattedLast}`;
 }

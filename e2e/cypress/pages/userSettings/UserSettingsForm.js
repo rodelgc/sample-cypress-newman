@@ -6,21 +6,15 @@ export function userSettingsPageLastNameInput() {
   return cy.get('[data-test="user-settings-lastName-input"]');
 }
 
-export function userSettingsPageEmailInput() {
-  return cy.get('[data-test="user-settings-email-input"]');
-}
-
-export function userSettingsPagePhoneNumberInput() {
-  return cy.get('[data-test="user-settings-phoneNumber-input"]');
-}
-
 export function fillUserSettingsFormAndSave({ email, phoneNumber }) {
-  userSettingsPageEmailInput().clear().type(email).should("have.value", email);
-  userSettingsPagePhoneNumberInput()
+  cy.get('[data-test="user-settings-email-input"]')
+    .clear()
+    .type(email)
+    .should('have.value', email)
+    .get('[data-test="user-settings-phoneNumber-input"]')
     .clear()
     .type(phoneNumber)
-    .should("have.value", phoneNumber);
-
-  cy.intercept("PATCH", "**/users/*").as("saveUserSettings");
-  cy.get('[data-test="user-settings-submit"]').click();
+    .should('have.value', phoneNumber)
+    .get('[data-test="user-settings-submit"]')
+    .click();
 }

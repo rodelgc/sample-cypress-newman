@@ -1,7 +1,7 @@
 export function getStartedModalTitle() {
   return cy
     .get('[data-test="user-onboarding-dialog-title"]')
-    .contains("Get Started with Real World App");
+    .contains('Get Started with Real World App');
 }
 
 export function getStartedModalContent() {

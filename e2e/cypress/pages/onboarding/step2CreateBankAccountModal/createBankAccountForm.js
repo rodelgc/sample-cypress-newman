@@ -7,13 +7,13 @@ export function fillCreateBankAccountFormAndSubmit({
   routingNumber,
   accountNumber
 }) {
-  cy.get("#bankaccount-bankName-input")
+  cy.get('#bankaccount-bankName-input')
     .clear()
     .type(bankName)
-    .get("#bankaccount-routingNumber-input")
+    .get('#bankaccount-routingNumber-input')
     .clear()
     .type(routingNumber)
-    .get("#bankaccount-accountNumber-input")
+    .get('#bankaccount-accountNumber-input')
     .clear()
     .type(accountNumber)
     .get('[data-test="bankaccount-submit"]')

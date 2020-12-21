@@ -1,7 +1,7 @@
 export function onboardingFinishedModalTitle() {
   return cy
     .get('[data-test="user-onboarding-dialog-title"]')
-    .contains("Finished");
+    .contains('Finished');
 }
 
 export function onboardingFinishedModalContent() {
