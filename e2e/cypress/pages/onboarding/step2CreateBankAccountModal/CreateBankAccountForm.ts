@@ -1,3 +1,5 @@
+import BankAccount from '../../../models/BankAccount';
+
 export function createBankAccountForm() {
   return cy.get('[data-test="bankaccount-form"]');
 }
@@ -6,7 +8,7 @@ export function fillCreateBankAccountFormAndSubmit({
   bankName,
   routingNumber,
   accountNumber
-}) {
+}: BankAccount) {
   cy.get('#bankaccount-bankName-input')
     .clear()
     .type(bankName)

@@ -1,3 +1,5 @@
+import User from '../../models/User';
+
 export function visitSignInPage() {
   cy.visit('/');
   assertThatUserIsAtSignInPage();
@@ -9,7 +11,7 @@ export function clickSignUpLink() {
   cy.get('[data-test=signup-title]').should('contain', 'Sign Up');
 }
 
-export function login({ username, password }) {
+export function login({ username, password }: User) {
   cy.get('#username')
     .clear()
     .type(username)

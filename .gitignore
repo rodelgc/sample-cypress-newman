@@ -6,3 +6,7 @@ node_modules/
 
 # Custom
 scratch.js
+
+# Cypress screenshots and videos
+**/cypress/videos
+**/cypress/screenshots

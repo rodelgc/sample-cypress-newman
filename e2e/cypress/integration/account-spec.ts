@@ -75,7 +75,7 @@ describe('User Account', () => {
 
     // assert that bank name was saved in Bank Accounts page
     navigateToBankAccounts();
-    bankAccountsListItem(bankAccount.bankName).should('be.visible');
+    bankAccountsListItem(bankAccount).should('be.visible');
 
     // complete User Settings
     navigateToMyAccount();

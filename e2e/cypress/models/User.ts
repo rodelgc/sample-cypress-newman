@@ -11,7 +11,7 @@ class User {
   password = 'T3st!';
 }
 
-function generateUsername(firstName, lastName) {
+function generateUsername(firstName: string, lastName: string) {
   const formattedFirst = firstName.replace(/\W/gi, '');
   const formattedLast = lastName.replace(/\W/gi, '');
 

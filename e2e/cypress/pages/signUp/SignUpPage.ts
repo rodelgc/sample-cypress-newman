@@ -1,9 +1,11 @@
+import User from '../../models/User';
+
 export function fillSignUpFormAndSubmit({
   firstName,
   lastName,
   username,
   password
-}) {
+}: User) {
   typeFirstName(firstName);
   typeLastName(lastName);
   typeUsername(username);
@@ -12,7 +14,7 @@ export function fillSignUpFormAndSubmit({
   submit();
 }
 
-function typeFirstName(firstName) {
+function typeFirstName(firstName: string) {
   cy.get('#firstName')
     .should('have.focus')
     .clear()
@@ -20,19 +22,19 @@ function typeFirstName(firstName) {
     .should('have.value', firstName);
 }
 
-function typeLastName(lastName) {
+function typeLastName(lastName: string) {
   cy.get('#lastName').clear().type(lastName).should('have.value', lastName);
 }
 
-function typeUsername(username) {
+function typeUsername(username: string) {
   cy.get('#username').clear().type(username).should('have.value', username);
 }
 
-function typePassword(password) {
+function typePassword(password: string) {
   cy.get('#password').clear().type(password).should('have.value', password);
 }
 
-function typeConfirmPassword(password) {
+function typeConfirmPassword(password: string) {
   cy.get('#confirmPassword')
     .clear()
     .type(password)
