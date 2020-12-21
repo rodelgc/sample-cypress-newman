@@ -11,9 +11,7 @@
   "author": "Rodel Calasagsag",
   "license": "ISC",
   "devDependencies": {
+    "chance": "^1.1.7",
     "cypress": "^6.1.0"
-  },
-  "dependencies": {
-    "chance": "^1.1.7"
   }
 }
