@@ -102,7 +102,7 @@ describe('User Account', () => {
     usernamePasswordInvalidErrMessage().should('be.visible');
   });
 
-  it.only('change user settings', () => {
+  it('change user settings', () => {
     const newDetails = new User();
 
     cy.signUpByApi(user, bankAccount);
