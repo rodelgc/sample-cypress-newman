@@ -1,3 +1,3 @@
-export function clickDone() {
-  return cy.get('[data-test="user-onboarding-next"]').contains('Done').click();
+export function clickDone(): Cypress.Chainable<JQuery<Element>> {
+  return cy.dataTest('user-onboarding-next').contains('Done').click();
 }

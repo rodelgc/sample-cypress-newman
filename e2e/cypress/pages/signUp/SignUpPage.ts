@@ -5,7 +5,7 @@ export function fillSignUpFormAndSubmit({
   lastName,
   username,
   password
-}: User) {
+}: User): void {
   typeFirstName(firstName);
   typeLastName(lastName);
   typeUsername(username);
@@ -42,5 +42,5 @@ function typeConfirmPassword(password: string) {
 }
 
 function submit() {
-  cy.get('[data-test="signup-submit"]').should('be.enabled').click();
+  cy.dataTest('signup-submit').should('be.enabled').click();
 }
