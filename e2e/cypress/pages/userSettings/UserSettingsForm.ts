@@ -20,17 +20,9 @@ export function fillUserSettingsFormAndSave({
   email,
   phoneNumber
 }: User): void {
-  userSettingsPageFirstNameInput().then(($firstName) => {
-    if ($firstName.val() !== firstName) {
-      $firstName.val(firstName);
-    }
-  });
+  userSettingsPageFirstNameInput().clear().type(firstName);
 
-  userSettingsPageLastNameInput().then(($lastName) => {
-    if ($lastName.val() !== lastName) {
-      $lastName.val(lastName);
-    }
-  });
+  userSettingsPageLastNameInput().clear().type(lastName);
 
   cy.dataTest('user-settings-email-input')
     .clear()
@@ -42,8 +34,4 @@ export function fillUserSettingsFormAndSave({
     .should('have.value', phoneNumber)
     .dataTest('user-settings-submit')
     .click();
-}
-
-export function visitMyAccountPage(): void {
-  cy.visit(USER_SETTINGS_PAGE_PATH);
 }

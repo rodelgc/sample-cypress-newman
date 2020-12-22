@@ -3,6 +3,7 @@ import { Chance } from 'chance';
 const chance = new Chance();
 
 class User implements IUser {
+  id = null;
   firstName = chance.first();
   lastName = chance.last();
   username = generateUsername(this.firstName, this.lastName);

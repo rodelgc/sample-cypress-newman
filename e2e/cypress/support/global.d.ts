@@ -1,4 +1,5 @@
 interface IUser {
+  id: string;
   firstName: string;
   lastName: string;
   username: string;
@@ -21,9 +22,14 @@ interface SignUpReqBody {
   confirmPassword: string;
 }
 
+interface CreateBankAccountReqBody {
+  userId: string;
+  bankName: string;
+  accountNumber: string;
+  routingNumber: string;
+}
+
 interface LoginReqBody {
-  type: 'LOGIN';
   username: string;
   password: string;
-  remember: true;
 }

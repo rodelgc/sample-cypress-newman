@@ -29,8 +29,7 @@ import {
 import {
   fillUserSettingsFormAndSave,
   userSettingsPageFirstNameInput,
-  userSettingsPageLastNameInput,
-  visitMyAccountPage
+  userSettingsPageLastNameInput
 } from '../pages/userSettings/UserSettingsForm';
 import { sideNavFullName } from '../pages/sideNav/FullName';
 import { sideNavUsername } from '../pages/sideNav/UserName';
@@ -38,16 +37,16 @@ import { sideNavAccountBalance } from '../pages/sideNav/AccountBalance';
 import { logout } from '../pages/sideNav/Logout';
 import { usernamePasswordInvalidErrMessage } from '../pages/signIn/UsernamePasswordInvalidErrMsg';
 
-let user: User;
+let user: IUser;
+let bankAccount: IBankAccount;
 
 beforeEach(() => {
   user = new User();
+  bankAccount = new BankAccount();
 });
 
 describe('User Account', () => {
   it('sign up, sign in, complete onboarding, complete user settings, and logout', () => {
-    const bankAccount = new BankAccount();
-
     // sign up
     visitSignInPage();
     clickSignUpLink();
@@ -55,7 +54,7 @@ describe('User Account', () => {
     assertThatUserIsAtSignInPage();
 
     // sign in
-    login(user.username, user.password);
+    cy.login(user);
     sideNavFullName().should(
       'have.text',
       `${user.firstName} ${user.lastName.charAt(0)}`
@@ -103,15 +102,15 @@ describe('User Account', () => {
     usernamePasswordInvalidErrMessage().should('be.visible');
   });
 
-  it('change user settings', () => {
-    const changedUser = new User();
+  it.only('change user settings', () => {
+    const newDetails = new User();
 
-    cy.signUpByApi(user);
-    cy.loginByApi(user);
+    cy.signUpByApi(user, bankAccount);
+    cy.login(user);
 
-    visitMyAccountPage();
-    fillUserSettingsFormAndSave(changedUser);
-    assertThatUserSettingsWereSaved(changedUser);
+    navigateToMyAccount();
+    fillUserSettingsFormAndSave(newDetails);
+    assertThatUserSettingsWereSaved(newDetails);
   });
 });
 

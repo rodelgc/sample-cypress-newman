@@ -12,17 +12,13 @@ declare namespace Cypress {
     dataTest(value: string): Chainable<JQuery<Element>>;
 
     /**
-     * Use the API to sign up a new account.
-     *
-     * @param {IUser} user
+     * Use the API to sign up.
      */
-    signUpByApi(user: IUser): Chainable<Response>;
+    signUpByApi(user: IUser, bankAccount: IBankAccount): Chainable<Response>;
 
     /**
      * Use the API to sign in.
-     *
-     * @param {IUser} user
      */
-    loginByApi(user: IUser): Chainable<Response>;
+    login(user: IUser): Chainable<Response>;
   }
 }
