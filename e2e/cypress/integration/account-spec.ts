@@ -109,7 +109,6 @@ describe('User Account', () => {
     cy.signUpByApi(user);
     cy.loginByApi(user);
 
-    // todo cannot access this page, must fix
     visitMyAccountPage();
     fillUserSettingsFormAndSave(changedUser);
     assertThatUserSettingsWereSaved(changedUser);
