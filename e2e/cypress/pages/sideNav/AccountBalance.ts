@@ -1,3 +1,3 @@
-export function sideNavAccountBalance() {
-  return cy.get('[data-test="sidenav-user-balance"]');
+export function sideNavAccountBalance(): Cypress.Chainable<JQuery<Element>> {
+  return cy.dataTest('sidenav-user-balance');
 }

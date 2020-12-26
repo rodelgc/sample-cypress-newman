@@ -1,30 +1,15 @@
-import User from '../../models/User';
+export const SIGN_IN_PAGE_PATH = '/signin';
 
-export function visitSignInPage() {
-  cy.visit('/');
-  assertThatUserIsAtSignInPage();
+export function visitSignInPage(): void {
+  cy.url().then((url) => {
+    if (!url.includes(SIGN_IN_PAGE_PATH)) {
+      cy.visit(SIGN_IN_PAGE_PATH);
+    }
+  });
 }
 
-export function clickSignUpLink() {
+export function clickSignUpLink(): void {
   cy.get('[data-test=signup]').click();
   cy.url().should('contain', '/signup');
   cy.get('[data-test=signup-title]').should('contain', 'Sign Up');
-}
-
-export function login({ username, password }: User) {
-  cy.get('#username')
-    .clear()
-    .type(username)
-    .get('#password')
-    .clear()
-    .type(password)
-    .get('[name="remember"]')
-    .check()
-    .get('[data-test="signin-submit"]')
-    .click();
-}
-
-export function assertThatUserIsAtSignInPage() {
-  cy.url().should('contain', '/signin');
-  cy.get('h1').should('have.text', 'Sign in');
 }

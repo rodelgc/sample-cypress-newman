@@ -1,3 +1,3 @@
-export function logout() {
-  cy.get('[data-test="sidenav-signout"]').click();
+export function logout(): void {
+  cy.dataTest('sidenav-signout').click();
 }

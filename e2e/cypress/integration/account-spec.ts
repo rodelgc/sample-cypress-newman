@@ -16,9 +16,8 @@ import {
 } from '../pages/onboarding/step1GetStartedModal/GetStartedModal';
 import { clickNext } from '../pages/onboarding/step1GetStartedModal/NextButton';
 import {
-  assertThatUserIsAtSignInPage,
   clickSignUpLink,
-  login,
+  SIGN_IN_PAGE_PATH,
   visitSignInPage
 } from '../pages/signIn/SignInPage';
 import { fillSignUpFormAndSubmit } from '../pages/signUp/SignUpPage';
@@ -36,12 +35,18 @@ import { sideNavFullName } from '../pages/sideNav/FullName';
 import { sideNavUsername } from '../pages/sideNav/UserName';
 import { sideNavAccountBalance } from '../pages/sideNav/AccountBalance';
 import { logout } from '../pages/sideNav/Logout';
+import { usernamePasswordInvalidErrMessage } from '../pages/signIn/UsernamePasswordInvalidErrMsg';
+
+let user: IUser;
+let bankAccount: IBankAccount;
+
+beforeEach(() => {
+  user = new User();
+  bankAccount = new BankAccount();
+});
 
 describe('User Account', () => {
-  it('sign up, sign in, onboarding, and complete user settings', () => {
-    const user = new User();
-    const bankAccount = new BankAccount();
-
+  it('sign up, sign in, complete onboarding, complete user settings, and logout', () => {
     // sign up
     visitSignInPage();
     clickSignUpLink();
@@ -49,11 +54,8 @@ describe('User Account', () => {
     assertThatUserIsAtSignInPage();
 
     // sign in
-    login(user);
-    sideNavFullName().should(
-      'have.text',
-      `${user.firstName} ${user.lastName.charAt(0)}`
-    );
+    cy.login(user);
+    assertThatSideNavFullNameIsCorrect(user);
     sideNavUsername().should('have.text', `@${user.username}`);
     sideNavAccountBalance().should('have.text', '$0.00');
 
@@ -75,26 +77,65 @@ describe('User Account', () => {
 
     // assert that bank name was saved in Bank Accounts page
     navigateToBankAccounts();
-    bankAccountsListItem(bankAccount).should('be.visible');
+    bankAccountsListItem(bankAccount.bankName).should('be.visible');
 
     // complete User Settings
     navigateToMyAccount();
     userSettingsPageFirstNameInput().should('have.value', user.firstName);
     userSettingsPageLastNameInput().should('have.value', user.lastName);
-    cy.intercept('/checkAuth').as('checkAuth');
     fillUserSettingsFormAndSave(user);
-    cy.wait('@checkAuth')
-      .its('response')
-      .then((res) => {
-        const actualEmail = res.body.user.email;
-        const actualPhoneNumber = res.body.user.phoneNumber;
-
-        expect(actualEmail).to.eq(user.email);
-        expect(actualPhoneNumber).to.eq(user.phoneNumber);
-      });
+    assertThatUserSettingsWereSaved(user);
 
     // logout
     logout();
     assertThatUserIsAtSignInPage();
   });
+
+  it('login with wrong password', () => {
+    user.password = 'wrong_password';
+
+    visitSignInPage();
+    cy.login(user);
+    usernamePasswordInvalidErrMessage().should('be.visible');
+  });
+
+  it('change user settings', () => {
+    const newDetails = new User();
+
+    cy.signUpByApi(user, bankAccount);
+    cy.login(user);
+
+    navigateToMyAccount();
+    fillUserSettingsFormAndSave(newDetails);
+    assertThatUserSettingsWereSaved(newDetails);
+    assertThatSideNavFullNameIsCorrect(newDetails);
+  });
 });
+
+function assertThatSideNavFullNameIsCorrect(user: IUser) {
+  sideNavFullName().should(
+    'have.text',
+    `${user.firstName} ${user.lastName.charAt(0)}`
+  );
+}
+
+function assertThatUserIsAtSignInPage() {
+  cy.url().should('contain', SIGN_IN_PAGE_PATH);
+  cy.get('h1').should('have.text', 'Sign in');
+}
+
+function assertThatUserSettingsWereSaved(expectedUser: IUser) {
+  cy.wait('@checkAuth')
+    .its('response.body.user')
+    .then((actual) => {
+      const actualFirstname = actual.firstName;
+      const actualLastName = actual.lastName;
+      const actualEmail = actual.email;
+      const actualPhoneNumber = actual.phoneNumber;
+
+      expect(actualFirstname).to.eq(expectedUser.firstName);
+      expect(actualLastName).to.eq(expectedUser.lastName);
+      expect(actualEmail).to.eq(expectedUser.email);
+      expect(actualPhoneNumber).to.eq(expectedUser.phoneNumber);
+    });
+}

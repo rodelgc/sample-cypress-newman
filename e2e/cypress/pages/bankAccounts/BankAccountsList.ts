@@ -1,5 +1,5 @@
-import BankAccount from '../../models/BankAccount';
-
-export function bankAccountsListItem({ bankName }: BankAccount) {
-  return cy.get('[data-test^="bankaccount-list-item-"]').contains(bankName);
+export function bankAccountsListItem(
+  bankName: string
+): Cypress.Chainable<JQuery<Element>> {
+  return cy.get('[data-test^="bankaccount-list-item-').contains(bankName);
 }

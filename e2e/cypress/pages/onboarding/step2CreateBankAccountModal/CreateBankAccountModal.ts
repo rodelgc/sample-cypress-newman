@@ -1,5 +1,7 @@
-export function createBankAccountModalTitle() {
+export function createBankAccountModalTitle(): Cypress.Chainable<
+  JQuery<Element>
+> {
   return cy
-    .get('[data-test="user-onboarding-dialog-title"]')
+    .dataTest('user-onboarding-dialog-title')
     .contains('Create Bank Account');
 }

@@ -1,3 +1,3 @@
-export function clickNext() {
-  cy.get('[data-test="user-onboarding-next"]').click();
+export function clickNext(): void {
+  cy.dataTest('user-onboarding-next').click();
 }

@@ -1,3 +1,3 @@
-export function sideNavUsername() {
-  return cy.get('[data-test="sidenav-username"]');
+export function sideNavUsername(): Cypress.Chainable<JQuery<Element>> {
+  return cy.dataTest('sidenav-username');
 }

@@ -1,8 +1,10 @@
-export function navigateToBankAccounts() {
-  cy.get('[data-test="sidenav-bankaccounts"]').click();
+import { USER_SETTINGS_PAGE_PATH } from '../userSettings/UserSettingsForm';
+
+export function navigateToBankAccounts(): void {
+  cy.dataTest('sidenav-bankaccounts').click();
   cy.url().should('contain', '/bankaccounts');
 }
-export function navigateToMyAccount() {
-  cy.get('[data-test="sidenav-user-settings"]').click();
-  cy.url().should('contain', '/user/settings');
+export function navigateToMyAccount(): void {
+  cy.dataTest('sidenav-user-settings').click();
+  cy.url().should('contain', USER_SETTINGS_PAGE_PATH);
 }

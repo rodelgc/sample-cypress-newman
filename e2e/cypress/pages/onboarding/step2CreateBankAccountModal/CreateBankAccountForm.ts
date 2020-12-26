@@ -1,14 +1,14 @@
 import BankAccount from '../../../models/BankAccount';
 
-export function createBankAccountForm() {
-  return cy.get('[data-test="bankaccount-form"]');
+export function createBankAccountForm(): Cypress.Chainable<JQuery<Element>> {
+  return cy.dataTest('bankaccount-form');
 }
 
 export function fillCreateBankAccountFormAndSubmit({
   bankName,
   routingNumber,
   accountNumber
-}: BankAccount) {
+}: BankAccount): void {
   cy.get('#bankaccount-bankName-input')
     .clear()
     .type(bankName)
@@ -18,6 +18,6 @@ export function fillCreateBankAccountFormAndSubmit({
     .get('#bankaccount-accountNumber-input')
     .clear()
     .type(accountNumber)
-    .get('[data-test="bankaccount-submit"]')
+    .dataTest('bankaccount-submit')
     .click();
 }
