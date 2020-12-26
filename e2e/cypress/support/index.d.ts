@@ -1,6 +1,41 @@
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference types="cypress" />
-/// <reference path="./global.d.ts" />
+
+interface IUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+}
+
+interface IBankAccount {
+  bankName: string;
+  routingNumber: string;
+  accountNumber: string;
+}
+
+interface SignUpReqBody {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface CreateBankAccountReqBody {
+  userId: string;
+  bankName: string;
+  accountNumber: string;
+  routingNumber: string;
+}
+
+interface LoginReqBody {
+  username: string;
+  password: string;
+}
 
 declare namespace Cypress {
   interface Chainable {
@@ -20,5 +55,11 @@ declare namespace Cypress {
      * Use the API to sign in.
      */
     login(user: IUser): Chainable<Response>;
+
+    /**
+     * Type a new value into the DOM element.
+     * If the DOM element already has this value, then do nothing.
+     */
+    typeNewVal(newText: string): Chainable<JQuery<Element>>;
   }
 }
