@@ -81,16 +81,17 @@ describe('User Account', () => {
     navigateToMyAccount();
     userSettingsPageFirstNameInput().should('have.value', user.firstName);
     userSettingsPageLastNameInput().should('have.value', user.lastName);
+    cy.intercept('/checkAuth').as('checkAuth');
     fillUserSettingsFormAndSave(user);
-    cy.intercept('/checkAuth', (req) => {
-      req.reply((res) => {
+    cy.wait('@checkAuth')
+      .its('response')
+      .then((res) => {
         const actualEmail = res.body.user.email;
         const actualPhoneNumber = res.body.user.phoneNumber;
 
         expect(actualEmail).to.eq(user.email);
         expect(actualPhoneNumber).to.eq(user.phoneNumber);
       });
-    });
 
     // logout
     logout();
