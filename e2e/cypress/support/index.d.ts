@@ -54,11 +54,5 @@ declare namespace Cypress {
      * Use the API to sign in.
      */
     login(user: IUser): Chainable<Response>;
-
-    /**
-     * Type a new value into the DOM element.
-     * If the DOM element already has this value, then do nothing.
-     */
-    typeNewVal(newText: string): Chainable<JQuery<Element>>;
   }
 }
