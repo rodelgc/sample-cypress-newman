@@ -1,4 +1,4 @@
-import { USER_SETTINGS_PAGE_PATH } from '../userSettings/UserSettingsForm';
+import { USER_SETTINGS_PAGE_PATH } from '../user_settings/UserSettingsForm';
 
 export function navigateToBankAccounts(): void {
   cy.dataTest('sidenav-bankaccounts').click();

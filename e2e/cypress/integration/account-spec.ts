@@ -3,50 +3,45 @@ import User from '../models/User';
 import {
   createBankAccountForm,
   fillCreateBankAccountFormAndSubmit
-} from '../pages/onboarding/step2CreateBankAccountModal/CreateBankAccountForm';
-import { createBankAccountModalTitle } from '../pages/onboarding/step2CreateBankAccountModal/CreateBankAccountModal';
-import { clickDone } from '../pages/onboarding/step3FinishedModal/DoneButton';
+} from '../pages/onboarding/step2_create_bank_account/CreateBankAccountForm';
+import { createBankAccountModalTitle } from '../pages/onboarding/step2_create_bank_account/CreateBankAccountModal';
+import { clickDone } from '../pages/onboarding/step3_finished/DoneButton';
 import {
   onboardingFinishedModalContent,
   onboardingFinishedModalTitle
-} from '../pages/onboarding/step3FinishedModal/FinishedModal';
+} from '../pages/onboarding/step3_finished/FinishedModal';
 import {
   getStartedModalContent,
   getStartedModalTitle
-} from '../pages/onboarding/step1GetStartedModal/GetStartedModal';
-import { clickNext } from '../pages/onboarding/step1GetStartedModal/NextButton';
+} from '../pages/onboarding/step1_get_started/GetStartedModal';
+import { clickNext } from '../pages/onboarding/step1_get_started/NextButton';
 import {
   clickSignUpLink,
   SIGN_IN_PAGE_PATH,
   visitSignInPage
-} from '../pages/signIn/SignInPage';
-import { fillSignUpFormAndSubmit } from '../pages/signUp/SignUpPage';
-import { bankAccountsListItem } from '../pages/bankAccounts/BankAccountsList';
+} from '../pages/sign_in/SignInPage';
+import { fillSignUpFormAndSubmit } from '../pages/sign_up/SignUpPage';
+import { bankAccountsListItem } from '../pages/bank_accounts/BankAccountsList';
 import {
   navigateToBankAccounts,
   navigateToMyAccount
-} from '../pages/sideNav/SideNav';
+} from '../pages/side_nav/SideNav';
 import {
   fillUserSettingsFormAndSave,
   userSettingsPageFirstNameInput,
   userSettingsPageLastNameInput
-} from '../pages/userSettings/UserSettingsForm';
-import { sideNavFullName } from '../pages/sideNav/FullName';
-import { sideNavUsername } from '../pages/sideNav/UserName';
-import { sideNavAccountBalance } from '../pages/sideNav/AccountBalance';
-import { logout } from '../pages/sideNav/Logout';
-import { usernamePasswordInvalidErrMessage } from '../pages/signIn/UsernamePasswordInvalidErrMsg';
-
-let user: IUser;
-let bankAccount: IBankAccount;
-
-beforeEach(() => {
-  user = new User();
-  bankAccount = new BankAccount();
-});
+} from '../pages/user_settings/UserSettingsForm';
+import { sideNavFullName } from '../pages/side_nav/FullName';
+import { sideNavUsername } from '../pages/side_nav/UserName';
+import { sideNavAccountBalance } from '../pages/side_nav/AccountBalance';
+import { logout } from '../pages/side_nav/Logout';
+import { usernamePasswordInvalidErrMessage } from '../pages/sign_in/UsernamePasswordInvalidErrMsg';
 
 describe('User Account', () => {
   it('sign up, sign in, complete onboarding, complete user settings, and logout', () => {
+    const user = new User();
+    const bankAccount = new BankAccount();
+
     // sign up
     visitSignInPage();
     clickSignUpLink();
@@ -94,7 +89,9 @@ describe('User Account', () => {
   it('login with wrong password', () => {
     visitSignInPage();
 
-    cy.fixture('user-wrong-password').then((user: IUser) => {
+    cy.dbFindUser().then((user: IUser) => {
+      user.password = 'wrongPass';
+
       cy.login(user);
     });
 
@@ -102,6 +99,8 @@ describe('User Account', () => {
   });
 
   it('change user settings', () => {
+    const user = new User();
+    const bankAccount = new BankAccount();
     const newDetails = new User();
 
     cy.setupUser(user, bankAccount);

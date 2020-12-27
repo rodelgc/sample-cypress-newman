@@ -1,5 +1,6 @@
-import { visitSignInPage } from '../pages/signIn/SignInPage';
-import { createBankAccountByApi, loginByApi } from './api-utils';
+import { Chance } from 'chance';
+import { visitSignInPage } from '../pages/sign_in/SignInPage';
+import { createBankAccountByApi, loginByApi } from './utils';
 
 Cypress.Commands.add('dataTest', (value) => {
   cy.get(`[data-test=${value}]`);
@@ -24,16 +25,29 @@ Cypress.Commands.add('setupUser', (user, bankAccount) => {
   createBankAccountByApi(user, bankAccount);
 });
 
-Cypress.Commands.add('login', (user) => {
+Cypress.Commands.add('login', (formdata) => {
   visitSignInPage();
   cy.get('#username')
     .clear()
-    .type(user.username)
+    .type(formdata.username)
     .get('#password')
     .clear()
-    .type(user.password)
+    .type(formdata.password)
     .get('[name="remember')
     .check()
     .dataTest('signin-submit')
     .click();
+});
+
+Cypress.Commands.add('dbFindUser', () => {
+  const dbPath = '../cypress-realworld-app/data/database.json';
+  const chance = new Chance();
+
+  cy.readFile(dbPath)
+    .its('users')
+    .then((users: IUser[]) => {
+      const idx = chance.integer({ min: 0, max: users.length });
+
+      return users[idx];
+    });
 });

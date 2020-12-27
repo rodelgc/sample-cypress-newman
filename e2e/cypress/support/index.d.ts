@@ -53,6 +53,11 @@ declare namespace Cypress {
     /**
      * Use the API to sign in.
      */
-    login(user: IUser): Chainable<Response>;
+    login(formData: LoginReqBody): Chainable<Response>;
+
+    /**
+     * Find a random user from db
+     */
+    dbFindUser(): Chainable<IUser>;
   }
 }
