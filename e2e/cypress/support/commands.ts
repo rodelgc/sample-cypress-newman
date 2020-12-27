@@ -1,4 +1,5 @@
 import { visitSignInPage } from '../pages/signIn/SignInPage';
+import { createBankAccountByApi, loginByApi } from './api-utils';
 
 Cypress.Commands.add('dataTest', (value) => {
   cy.get(`[data-test=${value}]`);
@@ -36,25 +37,3 @@ Cypress.Commands.add('login', (user) => {
     .dataTest('signin-submit')
     .click();
 });
-
-function createBankAccountByApi(user: IUser, bankAccount: IBankAccount) {
-  const url = `${Cypress.env('API_URL')}/bankAccounts`;
-  const body: CreateBankAccountReqBody = {
-    userId: user.id,
-    bankName: bankAccount.bankName,
-    accountNumber: bankAccount.accountNumber,
-    routingNumber: bankAccount.routingNumber
-  };
-
-  cy.request('POST', url, body);
-}
-
-function loginByApi(user: IUser) {
-  const url = `${Cypress.env('API_URL')}/login`;
-  const body: LoginReqBody = {
-    username: user.username,
-    password: user.password
-  };
-
-  cy.request('POST', url, body);
-}
