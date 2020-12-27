@@ -92,10 +92,12 @@ describe('User Account', () => {
   });
 
   it('login with wrong password', () => {
-    user.password = 'wrong_password';
-
     visitSignInPage();
-    cy.login(user);
+
+    cy.fixture('user-wrong-password').then((user: IUser) => {
+      cy.login(user);
+    });
+
     usernamePasswordInvalidErrMessage().should('be.visible');
   });
 

@@ -46,7 +46,7 @@ declare namespace Cypress {
     dataTest(value: string): Chainable<JQuery<Element>>;
 
     /**
-     * Use the API to sign up.
+     * Use the API to sign up and onboard new user
      */
     setupUser(user: IUser, bankAccount: IBankAccount): Chainable<Response>;
 
