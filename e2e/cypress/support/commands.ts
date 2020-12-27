@@ -4,7 +4,7 @@ Cypress.Commands.add('dataTest', (value) => {
   cy.get(`[data-test=${value}]`);
 });
 
-Cypress.Commands.add('signUpByApi', (user, bankAccount) => {
+Cypress.Commands.add('setupUser', (user, bankAccount) => {
   const url = `${Cypress.env('API_URL')}/users`;
   const body: SignUpReqBody = {
     firstName: user.firstName,

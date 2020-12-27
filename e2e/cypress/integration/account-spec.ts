@@ -102,7 +102,7 @@ describe('User Account', () => {
   it('change user settings', () => {
     const newDetails = new User();
 
-    cy.signUpByApi(user, bankAccount);
+    cy.setupUser(user, bankAccount);
     cy.login(user);
 
     navigateToMyAccount();

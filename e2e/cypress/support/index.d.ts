@@ -48,7 +48,7 @@ declare namespace Cypress {
     /**
      * Use the API to sign up.
      */
-    signUpByApi(user: IUser, bankAccount: IBankAccount): Chainable<Response>;
+    setupUser(user: IUser, bankAccount: IBankAccount): Chainable<Response>;
 
     /**
      * Use the API to sign in.
