@@ -1,9 +1,15 @@
-import { Chance } from 'chance';
+import User from '../models/User';
 import { visitSignInPage } from '../pages/sign_in/SignInPage';
 import { createBankAccountByApi, loginByApi } from './utils';
 
+const DB_PATH = '../cypress-realworld-app/data/database.json';
+
 Cypress.Commands.add('dataTest', (value) => {
   cy.get(`[data-test=${value}]`);
+});
+
+Cypress.Commands.add('dataTestStartsWith', (value) => {
+  cy.get(`[data-test^=${value}]`);
 });
 
 Cypress.Commands.add('setupUser', (user, bankAccount) => {
@@ -40,7 +46,19 @@ Cypress.Commands.add('login', (formdata) => {
 });
 
 Cypress.Commands.add('dbFindUser', (idx) => {
-  const dbPath = '../cypress-realworld-app/data/database.json';
+  cy.readFile(DB_PATH).its('users').its(idx);
+});
 
-  cy.readFile(dbPath).its('users').its(idx);
+Cypress.Commands.add('dbFindUsers', (count) => {
+  cy.readFile(DB_PATH)
+    .its('users')
+    .then((users) => {
+      const foundUsers: User[] = [];
+
+      for (let i = 0; i < count; i++) {
+        foundUsers.push(users[i]);
+      }
+
+      return foundUsers;
+    });
 });

@@ -1,6 +1,6 @@
 export function createBankAccountByApi(
-  user: IUser,
-  bankAccount: IBankAccount
+  user: User,
+  bankAccount: BankAccount
 ): void {
   const url = `${Cypress.env('API_URL')}/bankAccounts`;
   const body: CreateBankAccountReqBody = {
@@ -26,7 +26,7 @@ export function createBankAccountByApi(
   });
 }
 
-export function loginByApi(user: IUser): void {
+export function loginByApi(user: User): void {
   const url = `${Cypress.env('API_URL')}/login`;
   const body: LoginReqBody = {
     username: user.username,
@@ -35,4 +35,13 @@ export function loginByApi(user: IUser): void {
 
   cy.request('POST', url, body);
   cy.getCookie('connect.sid').should('exist');
+}
+
+export function toMoneyFormat(num: number): string {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  });
+
+  return formatter.format(num);
 }

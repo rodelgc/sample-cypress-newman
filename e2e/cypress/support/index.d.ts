@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
-interface IUser {
+declare class User {
+  balance: number;
   id: string;
   firstName: string;
   lastName: string;
@@ -10,7 +11,7 @@ interface IUser {
   password: string;
 }
 
-interface IBankAccount {
+declare class BankAccount {
   bankName: string;
   routingNumber: string;
   accountNumber: string;
@@ -40,15 +41,18 @@ declare namespace Cypress {
   interface Chainable {
     /**
      * Select DOM element using the data-test attribute.
-     *
-     * @param value value of the data-test attribute
      */
     dataTest(value: string): Chainable<JQuery<Element>>;
 
     /**
+     * Select DOM element whose data-test attribute starts with the given value
+     */
+    dataTestStartsWith(value: string): Chainable<JQuery<Element>>;
+
+    /**
      * Use the API to sign up and onboard new user
      */
-    setupUser(user: IUser, bankAccount: IBankAccount): Chainable<Response>;
+    setupUser(user: User, bankAccount: BankAccount): Chainable<Response>;
 
     /**
      * Use the API to sign in.
@@ -58,6 +62,11 @@ declare namespace Cypress {
     /**
      * Search DB for the user specified by the given index
      */
-    dbFindUser(idx: number): Chainable<IUser>;
+    dbFindUser(idx: number): Chainable<User>;
+
+    /**
+     * Search DB for multiple users at the specified indices
+     */
+    dbFindUsers(count: number): Chainable<User[]>;
   }
 }

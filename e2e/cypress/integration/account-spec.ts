@@ -88,7 +88,7 @@ describe('User Account', () => {
   it('login with wrong password', () => {
     visitSignInPage();
 
-    cy.dbFindUser(0).then((user: IUser) => {
+    cy.dbFindUser(0).then((user: User) => {
       user.password = 'wrongPass';
 
       cy.login(user);
@@ -111,7 +111,7 @@ describe('User Account', () => {
   });
 });
 
-function assertThatSideNavFullNameIsCorrect(user: IUser) {
+function assertThatSideNavFullNameIsCorrect(user: User) {
   sideNavFullName().should(
     'have.text',
     `${user.firstName} ${user.lastName.charAt(0)}`
