@@ -3,7 +3,7 @@ import User from '../models/User';
 import {
   createBankAccountForm,
   fillCreateBankAccountFormAndSubmit
-} from '../pages/onboarding/step2_create_bank_account/CreateBankAccountForm';
+} from '../pages/bank_accounts/CreateBankAccountForm';
 import { createBankAccountModalTitle } from '../pages/onboarding/step2_create_bank_account/CreateBankAccountModal';
 import { clickDone } from '../pages/onboarding/step3_finished/DoneButton';
 import {
@@ -72,14 +72,13 @@ describe('User Account', () => {
 
     // assert that bank name was saved in Bank Accounts page
     navigateToBankAccounts();
-    bankAccountsListItem(bankAccount.bankName).should('be.visible');
+    bankAccountsListItem(bankAccount).should('be.visible');
 
     // complete User Settings
     navigateToMyAccount();
     userSettingsPageFirstNameInput().should('have.value', user.firstName);
     userSettingsPageLastNameInput().should('have.value', user.lastName);
     fillUserSettingsFormAndSave(user);
-    assertThatUserSettingsWereSaved(user);
 
     // logout
     logout();
@@ -108,7 +107,6 @@ describe('User Account', () => {
 
     navigateToMyAccount();
     fillUserSettingsFormAndSave(newDetails);
-    assertThatUserSettingsWereSaved(newDetails);
     assertThatSideNavFullNameIsCorrect(newDetails);
   });
 });
@@ -123,20 +121,4 @@ function assertThatSideNavFullNameIsCorrect(user: IUser) {
 function assertThatUserIsAtSignInPage() {
   cy.url().should('contain', SIGN_IN_PAGE_PATH);
   cy.get('h1').should('have.text', 'Sign in');
-}
-
-function assertThatUserSettingsWereSaved(expectedUser: IUser) {
-  cy.wait('@checkAuth')
-    .its('response.body.user')
-    .then((actual) => {
-      const actualFirstname = actual.firstName;
-      const actualLastName = actual.lastName;
-      const actualEmail = actual.email;
-      const actualPhoneNumber = actual.phoneNumber;
-
-      expect(actualFirstname).to.eq(expectedUser.firstName);
-      expect(actualLastName).to.eq(expectedUser.lastName);
-      expect(actualEmail).to.eq(expectedUser.email);
-      expect(actualPhoneNumber).to.eq(expectedUser.phoneNumber);
-    });
 }

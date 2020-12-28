@@ -1,4 +1,4 @@
-import BankAccount from '../../../models/BankAccount';
+import BankAccount from '../../models/BankAccount';
 
 export function createBankAccountForm(): Cypress.Chainable<JQuery<Element>> {
   return cy.dataTest('bankaccount-form');

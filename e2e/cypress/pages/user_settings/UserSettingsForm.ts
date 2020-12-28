@@ -35,5 +35,18 @@ export function fillUserSettingsFormAndSave({
     .dataTest('user-settings-submit')
     .click();
 
-  cy.intercept('/checkAuth').as('checkAuth');
+  cy.intercept('/checkAuth', (req) => {
+    req.reply((res) => {
+      const actual = res.body.user;
+      const actualFirstname = actual.firstName;
+      const actualLastName = actual.lastName;
+      const actualEmail = actual.email;
+      const actualPhoneNumber = actual.phoneNumber;
+
+      expect(actualFirstname).to.eq(firstName);
+      expect(actualLastName).to.eq(lastName);
+      expect(actualEmail).to.eq(email);
+      expect(actualPhoneNumber).to.eq(phoneNumber);
+    });
+  });
 }

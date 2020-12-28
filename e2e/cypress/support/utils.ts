@@ -10,7 +10,20 @@ export function createBankAccountByApi(
     routingNumber: bankAccount.routingNumber
   };
 
-  cy.request('POST', url, body);
+  cy.request('POST', url, body).then((res) => {
+    const status = res.status;
+    const actualAccount = res.body.account;
+    const actualUserId = actualAccount.userId;
+    const actualAccountNumber = actualAccount.accountNumber;
+    const actualBankName = actualAccount.bankName;
+    const actualRoutingNumber = actualAccount.routingNumber;
+
+    expect(status).to.eq(200);
+    expect(actualUserId).to.eq(user.id);
+    expect(actualAccountNumber).to.eq(bankAccount.accountNumber);
+    expect(actualBankName).to.eq(bankAccount.bankName);
+    expect(actualRoutingNumber).to.eq(bankAccount.routingNumber);
+  });
 }
 
 export function loginByApi(user: IUser): void {
@@ -21,4 +34,5 @@ export function loginByApi(user: IUser): void {
   };
 
   cy.request('POST', url, body);
+  cy.getCookie('connect.sid').should('exist');
 }
