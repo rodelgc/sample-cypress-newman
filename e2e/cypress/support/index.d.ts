@@ -56,8 +56,8 @@ declare namespace Cypress {
     login(formData: LoginReqBody): Chainable<Response>;
 
     /**
-     * Find a random user from db
+     * Search DB for the user specified by the given index
      */
-    dbFindUser(): Chainable<IUser>;
+    dbFindUser(idx: number): Chainable<IUser>;
   }
 }

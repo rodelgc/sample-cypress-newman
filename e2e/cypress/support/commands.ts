@@ -39,15 +39,8 @@ Cypress.Commands.add('login', (formdata) => {
     .click();
 });
 
-Cypress.Commands.add('dbFindUser', () => {
+Cypress.Commands.add('dbFindUser', (idx) => {
   const dbPath = '../cypress-realworld-app/data/database.json';
-  const chance = new Chance();
 
-  cy.readFile(dbPath)
-    .its('users')
-    .then((users: IUser[]) => {
-      const idx = chance.integer({ min: 0, max: users.length });
-
-      return users[idx];
-    });
+  cy.readFile(dbPath).its('users').its(idx);
 });

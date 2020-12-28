@@ -88,7 +88,7 @@ describe('User Account', () => {
   it('login with wrong password', () => {
     visitSignInPage();
 
-    cy.dbFindUser().then((user: IUser) => {
+    cy.dbFindUser(0).then((user: IUser) => {
       user.password = 'wrongPass';
 
       cy.login(user);
