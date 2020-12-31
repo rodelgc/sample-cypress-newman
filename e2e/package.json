@@ -7,6 +7,9 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test": "npm run cy:open",
+    "test:ui": "npm run cy:open",
+    "newman": "cd api && newman run API_Test_Suite.postman_collection.json -e LOCALHOST.postman_environment.json --bail -g portfolio-cypress.postman_globals.json",
+    "test:api": "npm run newman",
     "lint": "eslint cypress/**/*.ts"
   },
   "author": "Rodel Calasagsag",
@@ -24,6 +27,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
+    "newman": "^5.2.1",
     "typescript": "^4.1.3"
   }
 }

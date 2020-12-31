@@ -2,13 +2,13 @@
 
 ## Description
 
-My sample E2E test using Cypress and Typescript.
+This is my sample test code for the Cypress Real World App. I used Cypress for the UI end-to-end testing, and Postman for API testing.
 
 ## Setup requirements
 
 You should have NodeJS and Yarn installed in order to run the app and the tests.
 
-## Instructions for running the web app
+## To run the Cypress Real World app
 
 Once you have installed NodeJS and Yarn, follow these steps to run the web app:
 
@@ -34,24 +34,41 @@ Once you have installed NodeJS and Yarn, follow these steps to run the web app:
    yarn dev
    ```
 
-## Instructions for running the e2e tests
+## To run the e2e tests
 
-To run the tests in command line:
-
-```
-cd e2e
-npm install
-npm run cy:run
-```
-
-To run the tests in the Cypress test runner
+Install dependencies. From the project root directory:
 
 ```
-npm run test
+$ cd e2e
+$ npm install
 ```
 
-or
+To open the Cypress test runner
 
 ```
-npm run cy:open
+$ npm run cy:open
+
+# or
+
+$ npm run test
+
+# or
+
+$ npm run test:ui
+```
+
+To run cypress tests in the command line
+
+```
+$ npm run cy:run
+```
+
+## To run API tests via newman
+
+```
+$ npm run test:api
+
+# or
+
+$ npm run newman
 ```

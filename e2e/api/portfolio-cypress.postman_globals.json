@@ -1,0 +1,14 @@
+{
+	"id": "36ddb580-43b5-405f-82fd-67f0d28b5f41",
+	"values": [
+		{
+			"key": "password",
+			"value": "s3cret",
+			"enabled": true
+		}
+	],
+	"name": "portfolio-cypress Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2020-12-31T08:45:13.277Z",
+	"_postman_exported_using": "Postman/7.36.1"
+}

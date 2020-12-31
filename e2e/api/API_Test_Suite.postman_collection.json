@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "e810df5d-1f08-4008-9ddb-cdd0634a5283",
+		"name": "API_Test_Suite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "Login With Remember",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test('Cookie \"connect.sid\" is created after login', () => {\r",
+											"    pm.expect(pm.cookies.has('connect.sid')).to.be.true;\r",
+											"});\r",
+											"\r",
+											"pm.test('Cookie \"connect.sid\" expires in 30 days', () => {\r",
+											"    const connectSid = pm.cookies.idx(0);\r",
+											"    const actualExpiry = new Date(connectSid.expires);\r",
+											"    const actualExpiryFormatted = actualExpiry.toLocaleDateString('en-AU');\r",
+											"    const expectedExpiry = new Date();\r",
+											"    expectedExpiry.setDate(expectedExpiry.getDate() + 30);\r",
+											"    const expectedExpiryFormatted = expectedExpiry.toLocaleDateString('en-AU');\r",
+											"\r",
+											"    pm.expect(actualExpiryFormatted).to.eq(expectedExpiryFormatted);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"LOGIN\",\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"remember\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"login"
+									]
+								},
+								"description": "Login"
+							},
+							"response": []
+						},
+						{
+							"name": "Login No Remember",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test('Cookie \"connect.sid\" is created after login', () => {\r",
+											"    pm.expect(pm.cookies.has('connect.sid')).to.be.true;\r",
+											"});\r",
+											"\r",
+											"pm.test('Cookie \"connect.sid\" only valid in current browser session', () => {\r",
+											"    const connectSid = pm.cookies.idx(0);\r",
+											"    \r",
+											"    pm.expect(connectSid.expires).to.not.exist;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"LOGIN\",\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"remember\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"login"
+									]
+								},
+								"description": "Login"
+							},
+							"response": []
+						},
+						{
+							"name": "Login Wrong Credentials",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"LOGIN\",\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"wrongP4$$\",\r\n    \"remember\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"login"
+									]
+								},
+								"description": "Login"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const url = `${pm.variables.get('base_url')}/users`;",
+									"const method = 'POST';",
+									"const body = {",
+									"    mode: 'raw',",
+									"    raw: JSON.stringify({",
+									"        firstName: pm.variables.get('firstName'),",
+									"        lastName: pm.variables.get('lastName'),",
+									"        username: pm.variables.get('username'),",
+									"        password: pm.variables.get('password'),",
+									"        confirmPassword: pm.variables.get('password')",
+									"    })",
+									"};",
+									"const header = \"Content-Type:application/json\";",
+									"const opts = {",
+									"    url: url, method: method, body: body, header: header",
+									"};",
+									"const cb = (err, res) => {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"",
+									"    pm.test('User setup is successful', () => {",
+									"        pm.expect(res.code).to.eq(201);",
+									"    });",
+									"}",
+									"",
+									"pm.test('Cookie \"connect.sid\" does not exist prior to login attempt', () => {",
+									"    pm.expect(pm.cookies.has('connect.sid')).to.be.false;",
+									"});",
+									"",
+									"pm.sendRequest(opts, cb);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Sign Up",
+					"item": [
+						{
+							"name": "Sign Up",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"const actualUser = jsonData.user;\r",
+											"const expectedFirstName = pm.variables.get('firstName');\r",
+											"const expectedLastName = pm.variables.get('lastName');\r",
+											"const expectedHashedPasswd = pm.variables.get('hashedPassword');\r",
+											"const secret = pm.variables.get('password');\r",
+											"const expectedBalance = 0;\r",
+											"const expectedCreatedAt = new Date();\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(`First name is \"${expectedFirstName}\"`, function () {\r",
+											"    const actualFirstName = actualUser.firstName;\r",
+											"\r",
+											"    pm.expect(actualFirstName).to.eq(expectedFirstName);\r",
+											"});\r",
+											"\r",
+											"pm.test(`Last name is \"${expectedLastName}\"`, function () {\r",
+											"    const actualLastName = actualUser.lastName;\r",
+											"\r",
+											"    pm.expect(actualLastName).to.eq(expectedLastName);\r",
+											"});\r",
+											"\r",
+											"pm.test(`Balance is ${expectedBalance}`, function () {\r",
+											"    const actualBalance = actualUser.balance;\r",
+											"\r",
+											"    pm.expect(actualBalance).to.eq(expectedBalance);\r",
+											"});\r",
+											"\r",
+											"pm.test(`createdAt is close to now by 10 sec`, function () {\r",
+											"    const actualCreatedAt = new Date(actualUser.createdAt);\r",
+											"\r",
+											"    pm.expect(actualCreatedAt.getTime()).to.be.closeTo(expectedCreatedAt.getTime(), 10000);\r",
+											"});\r",
+											"\r",
+											"pm.test(`modifiedAt is equal to createdAt`, function () {\r",
+											"    const actualmodifiedAt = actualUser.modifiedAt;\r",
+											"    const actualCreatedAt = actualUser.createdAt;\r",
+											"\r",
+											"    pm.expect(actualmodifiedAt).to.eq(actualCreatedAt);\r",
+											"});\r",
+											"\r",
+											"pm.test(`id is generated`, function () {\r",
+											"    const actualId = actualUser.id;\r",
+											"\r",
+											"    pm.expect(actualUser).to.have.property('id');\r",
+											"    pm.expect(actualId).to.have.length.greaterThan(0);\r",
+											"});\r",
+											"\r",
+											"pm.test(`username is generated`, function () {\r",
+											"    const actualUserName = actualUser.username;\r",
+											"\r",
+											"    pm.expect(actualUser).to.have.property('username');\r",
+											"    pm.expect(actualUserName).to.have.length.greaterThan(0);\r",
+											"});\r",
+											"\r",
+											"pm.test(`uuid is generated`, function () {\r",
+											"    const actualUuid = actualUser.uuid;\r",
+											"\r",
+											"    pm.expect(actualUuid).to.have.lengthOf(36);\r",
+											"});\r",
+											"\r",
+											"pm.test(`password is hashed`, function () {\r",
+											"    const actualPw = actualUser.password;\r",
+											"\r",
+											"    pm.expect(actualUser).to.have.property('password');\r",
+											"    pm.expect(actualPw).to.not.eq(secret);\r",
+											"    pm.expect(actualPw).to.have.length.greaterThan(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"{{firstName}}\",\r\n    \"lastName\": \"{{lastName}}\",\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"confirmPassword\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users"
+									]
+								},
+								"description": "Sign up"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// User Account variables",
+					"const firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+					"pm.variables.set('firstName', firstName);",
+					"",
+					"const lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+					"pm.variables.set('lastName', lastName);",
+					"",
+					"const username = `${firstName}_${lastName}`;",
+					"pm.variables.set('username', username);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
