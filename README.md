@@ -34,9 +34,9 @@ Once you have installed NodeJS and Yarn, follow these steps to run the web app:
    yarn dev
    ```
 
-## To run the e2e tests
+## To run UI and API tests
 
-Install dependencies. From the project root directory:
+From the project root directory, run this command to install dependencies needed for running the tests:
 
 ```
 $ cd e2e
@@ -63,7 +63,7 @@ To run cypress tests in the command line
 $ npm run cy:run
 ```
 
-## To run API tests via newman
+To run API tests via newman
 
 ```
 $ npm run test:api
