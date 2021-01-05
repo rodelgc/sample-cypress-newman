@@ -39,7 +39,7 @@ Once you have installed NodeJS and Yarn, follow these steps to run the web app:
 From the project root directory, run this command to install dependencies needed for running the tests:
 
 ```
-$ cd e2e
+$ cd tests
 $ npm install
 ```
 
