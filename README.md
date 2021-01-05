@@ -13,62 +13,49 @@ You should have NodeJS and Yarn installed in order to run the app and the tests.
 Once you have installed NodeJS and Yarn, follow these steps to run the web app:
 
 1. Navigate to the root directory of this repo
-   ```
-   cd portfolio-cypress
+   ```bash
+   $ cd portfolio-cypress
    ```
 1. Initialize and update the cypress realworld app submodule
-   ```
-   git submodule init
-   git submodule update
+   ```bash
+   $ git submodule init
+   $ git submodule update
    ```
 1. Navigate inside the app directory
-   ```
-   cd cypress-realworld-app
+   ```bash
+   $ cd cypress-realworld-app
    ```
 1. Install dependencies
-   ```
-   yarn install
+   ```bash
+   $ yarn install
    ```
 1. Start the app with a seeded db
+   ```bash
+   $ yarn dev
    ```
-   yarn dev
-   ```
 
-## To run UI and API tests
+## To run UI tests
 
-From the project root directory, run this command to install dependencies needed for running the tests:
+From the project root directory
 
-```
-$ cd tests
+```bash
+$ cd ./tests/ui
 $ npm install
-```
 
-To open the Cypress test runner
-
-```
-$ npm run cy:open
-
-# or
-
+# if you want to open the cypress test runner
+# and run the tests from there
 $ npm run test
 
-# or
-
-$ npm run test:ui
+# if you want to run the tests on command line
+$ npm run test:run
 ```
 
-To run cypress tests in the command line
+## To run API tests
 
-```
-$ npm run cy:run
-```
+From the project root directory
 
-To run API tests via newman
-
-```
-$ npm run test:api
-
-# or
-
-$ npm run newman
+```bash
+$ cd ./tests/api
+$ npm install
+$ npm run test
 ```

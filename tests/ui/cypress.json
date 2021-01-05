@@ -3,5 +3,9 @@
   "env": {
     "GLOBAL_PASSWORD": "s3cret",
     "API_URL": "http://localhost:3001"
+  },
+  "retries": {
+    "runMode": 2,
+    "openMode": 1
   }
 }

@@ -1,0 +1,14 @@
+{
+  "name": "api-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "newman run API_Test_Suite.postman_collection.json -e LOCALHOST.postman_environment.json --bail -g portfolio-cypress.postman_globals.json"
+  },
+  "author": "Rodel Calasagsag",
+  "license": "ISC",
+  "devDependencies": {
+    "newman": "^5.2.2"
+  }
+}

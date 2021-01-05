@@ -2,7 +2,7 @@ import User from '../models/User';
 import { visitSignInPage } from '../pages/sign_in/SignInPage';
 import { createBankAccountByApi, loginByApi } from './utils';
 
-const DB_PATH = '../cypress-realworld-app/data/database.json';
+const DB_PATH = '../../cypress-realworld-app/data/database.json';
 
 Cypress.Commands.add('dataTest', (value) => {
   cy.get(`[data-test=${value}]`);
