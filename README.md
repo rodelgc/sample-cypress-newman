@@ -2,7 +2,7 @@
 
 ## Description
 
-This is my sample test code for the Cypress Real World App. I used Cypress for the UI end-to-end testing, and Postman & Newman for API testing.
+These are my Cypress and Postman/Newman samples. The application under test is the Cypress Real World App.
 
 ## Setup requirements
 
