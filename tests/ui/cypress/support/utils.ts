@@ -1,3 +1,16 @@
+export function loginByApi(user: User): void {
+  const url = `${Cypress.env('API_URL')}/login`;
+  const body: LoginReqBody = {
+    type: 'LOGIN',
+    username: user.username,
+    password: user.password,
+    remember: true
+  };
+
+  cy.request('POST', url, body);
+  cy.getCookie('connect.sid').should('exist');
+}
+
 export function createBankAccountByApi(
   user: User,
   bankAccount: BankAccount
@@ -24,17 +37,6 @@ export function createBankAccountByApi(
     expect(actualBankName).to.eq(bankAccount.bankName);
     expect(actualRoutingNumber).to.eq(bankAccount.routingNumber);
   });
-}
-
-export function loginByApi(user: User): void {
-  const url = `${Cypress.env('API_URL')}/login`;
-  const body: LoginReqBody = {
-    username: user.username,
-    password: user.password
-  };
-
-  cy.request('POST', url, body);
-  cy.getCookie('connect.sid').should('exist');
 }
 
 export function toMoneyFormat(num: number): string {

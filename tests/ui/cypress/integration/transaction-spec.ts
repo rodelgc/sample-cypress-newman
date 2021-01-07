@@ -8,7 +8,7 @@ import { clickNewTransactionButton } from '../pages/home/NewTransactionButton';
 import {
   clickRequestButton,
   fillPaymentForm,
-  PaymentFormHeader
+  paymentFormHeader
 } from '../pages/new_transaction/PaymentForm';
 import {
   searchResult,
@@ -28,29 +28,30 @@ import {
 import User from '../models/User';
 
 describe('Transaction', () => {
-  it('request payment', () => {
+  it('can request', () => {
     cy.dbFindUsers(2).then((users) => {
       const requester: User = users[0];
       const payer: User = users[1];
-      const transaction = new Transaction(payer);
+      const transaction = new Transaction();
       const summaryAmount: number = Math.floor(transaction.amount / 100);
       requester.password = Cypress.env('GLOBAL_PASSWORD');
       payer.password = Cypress.env('GLOBAL_PASSWORD');
 
       cy.login(requester);
 
-      // create new transaction
       clickNewTransactionButton();
-      // step 1
+
+      // step 1: search user
       searchContact(payer);
       searchResult(payer).within(($row) => {
         expect($row).to.contain(payer.username);
         expect($row).to.contain(payer.email);
         expect($row).to.contain(payer.phoneNumber);
-        cy.wrap($row).click();
+        $row.trigger('click');
       });
-      // step 2
-      PaymentFormHeader()
+
+      // step 2: enter amount and note
+      paymentFormHeader()
         .should('contain', `${payer.firstName}`)
         .and('contain', `${payer.lastName}`);
       fillPaymentForm(transaction);
@@ -60,7 +61,7 @@ describe('Transaction', () => {
         .then((id) => {
           transaction.id = id;
 
-          // step 3
+          // step 3: verify transaction summary
           transactionSummary()
             .should('contain', 'Requested')
             .and('contain', toMoneyFormat(summaryAmount))

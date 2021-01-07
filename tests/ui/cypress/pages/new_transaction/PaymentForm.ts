@@ -1,6 +1,6 @@
 import { Transaction } from '../../models/Transaction';
 
-export function PaymentFormHeader(): Cypress.Chainable<
+export function paymentFormHeader(): Cypress.Chainable<
   JQuery<HTMLHeadingElement>
 > {
   return cy.get('h2');

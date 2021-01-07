@@ -33,8 +33,10 @@ interface CreateBankAccountReqBody {
 }
 
 interface LoginReqBody {
+  type: 'LOGIN';
   username: string;
   password: string;
+  remember: boolean;
 }
 
 declare namespace Cypress {
@@ -55,17 +57,12 @@ declare namespace Cypress {
     setupUser(user: User, bankAccount: BankAccount): Chainable<Response>;
 
     /**
-     * Use the API to sign in.
+     * Login through the UI
      */
-    login(formData: LoginReqBody): Chainable<Response>;
+    login(user: User): Chainable<Response>;
 
     /**
-     * Search DB for the user specified by the given index
-     */
-    dbFindUser(idx: number): Chainable<User>;
-
-    /**
-     * Search DB for multiple users at the specified indices
+     * Retrieve users from the db
      */
     dbFindUsers(count: number): Chainable<User[]>;
   }

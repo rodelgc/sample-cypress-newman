@@ -45,20 +45,10 @@ Cypress.Commands.add('login', (formdata) => {
     .click();
 });
 
-Cypress.Commands.add('dbFindUser', (idx) => {
-  cy.readFile(DB_PATH).its('users').its(idx);
-});
-
 Cypress.Commands.add('dbFindUsers', (count) => {
   cy.readFile(DB_PATH)
     .its('users')
     .then((users) => {
-      const foundUsers: User[] = [];
-
-      for (let i = 0; i < count; i++) {
-        foundUsers.push(users[i]);
-      }
-
-      return foundUsers;
+      return (users as User[]).slice(0, count);
     });
 });

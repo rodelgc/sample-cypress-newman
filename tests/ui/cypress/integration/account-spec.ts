@@ -59,10 +59,12 @@ describe('User Account', () => {
     getStartedModalTitle().should('be.visible');
     getStartedModalContent().should('be.visible');
     clickNext();
+
     // "Create Bank Account" step
     createBankAccountModalTitle().should('be.visible');
     createBankAccountForm().should('be.visible');
     fillCreateBankAccountFormAndSubmit(bankAccount);
+
     // "Finished" step
     onboardingFinishedModalTitle().should('be.visible');
     onboardingFinishedModalContent().should('be.visible');
@@ -88,11 +90,13 @@ describe('User Account', () => {
   it('login with wrong password', () => {
     visitSignInPage();
 
-    cy.dbFindUser(0).then((user: User) => {
-      user.password = 'wrongPass';
+    cy.dbFindUsers(1)
+      .its(0)
+      .then((user: User) => {
+        user.password = 'wrongPass';
 
-      cy.login(user);
-    });
+        cy.login(user);
+      });
 
     usernamePasswordInvalidErrMessage().should('be.visible');
   });
@@ -103,10 +107,13 @@ describe('User Account', () => {
     const newDetails = new User();
 
     cy.setupUser(user, bankAccount);
+
     cy.login(user);
 
     navigateToMyAccount();
+
     fillUserSettingsFormAndSave(newDetails);
+
     assertThatSideNavFullNameIsCorrect(newDetails);
   });
 });

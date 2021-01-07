@@ -1,5 +1,4 @@
 import { Chance } from 'chance';
-import User from './User';
 
 const chance = new Chance();
 
@@ -8,8 +7,8 @@ export class Transaction {
   amount: number;
   description: string;
 
-  constructor(user: User) {
-    this.amount = chance.integer({ min: 1, max: user.balance });
+  constructor() {
+    this.amount = chance.integer({ min: 10000, max: 99999 });
     this.description = chance.sentence({ words: 3 });
   }
 }
