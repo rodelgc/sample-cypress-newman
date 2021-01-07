@@ -10,29 +10,13 @@ You should have NodeJS and Yarn installed in order to run the app and the tests.
 
 ## To run the Cypress Real World app
 
-Once you have installed NodeJS and Yarn, follow these steps to run the web app:
+From the root directory:
 
-1. Navigate to the root directory of this repo
-   ```bash
-   $ cd portfolio-cypress
-   ```
-1. Initialize and update the cypress realworld app submodule
-   ```bash
-   $ git submodule init
-   $ git submodule update
-   ```
-1. Navigate inside the app directory
-   ```bash
-   $ cd cypress-realworld-app
-   ```
-1. Install dependencies
-   ```bash
-   $ yarn install
-   ```
-1. Start the app with a seeded db
-   ```bash
-   $ yarn dev
-   ```
+```bash
+$ cd app
+$ yarn install # install dependencies
+$ yarn dev # run local server with seeded db
+```
 
 ## To run UI tests
 
